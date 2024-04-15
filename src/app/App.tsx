@@ -4,25 +4,34 @@ import Header from "../components/Header/Header";
 import TodoList from "../components/TodoList/TodoList";
 import { useAppDispatch, useAppSelector } from '../../Hook';
 import "./App.scss";
-import { setValueTitle } from "../redux/slice/totoSlice";
+import { removeTodo, setTask, setValueTitle, toggleDone } from "../redux/slice/totoSlice";
 
 const App: React.FC = () => {
     const dispatch = useAppDispatch();
     const { todoList, todoValue } = useAppSelector((state) => state.todoSlice);
 
-    const addTodo = () => {
-        console.log(true);
+    const addTodo = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        dispatch(setTask(todoValue))
+        dispatch(setValueTitle(''));
     };
 
     const inputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value);
         dispatch(setValueTitle(event.target.value));
+    };
+
+    const toggleTodoItem = (id: number) => {
+        dispatch(toggleDone(id))
+    };
+
+    const removeTodoItem = (id: number) => {
+        dispatch(removeTodo(id));
     };
 
     return (
         <div className="container">
             <Header />
-            <TodoList todoList={todoList}/>
+            <TodoList todoList={todoList} toggleTodoItem={toggleTodoItem} removeTodoItem={removeTodoItem}/>
             <Form addTodo={addTodo} inputValue={inputValue} todoValue={todoValue}/>
         </div>
     );

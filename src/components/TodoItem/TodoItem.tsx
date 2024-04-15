@@ -9,18 +9,20 @@ type TypeTodoItem = {
 }
 
 interface TodoItemInterface {
-    todoItem: TypeTodoItem
+    todoItem: TypeTodoItem,
+    toggleTodoItem: (id: number) => void,
+    removeTodoItem: (id: number) => void
 }
 
-const TodoItem: React.FC<TodoItemInterface> = ({todoItem}) => { 
+const TodoItem: React.FC<TodoItemInterface> = ({todoItem, toggleTodoItem, removeTodoItem}) => { 
     return (
         <li id={todoItem.id} className="list-group-item d-flex justify-content-between task-item">
             <span className={`task-title ${todoItem.completed ? 'completed' : ''}`}>{todoItem.title}</span>
             <div className="task-item__buttons">
-                <button type="button" data-action="done" className="btn-action">
+                <button onClick={() => removeTodoItem(todoItem.id)} type="button" data-action="done" className="btn-action">
                     <img src={clossIcon} alt="Done" width="18" height="18"/>
                 </button>
-                <button onClick={() => console.log(true)} type="button" data-action="delete" className="btn-action">
+                <button onClick={() => toggleTodoItem(todoItem.id)} type="button" data-action="delete" className="btn-action">
                     <img src={doneIcon} alt="Done" width="18" height="18"/>
                 </button>
             </div>

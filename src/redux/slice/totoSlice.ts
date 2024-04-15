@@ -12,10 +12,8 @@ interface TypeInitialStore {
 }
 
 const initialState: TypeInitialStore = {
-    todoList: [
-        { id: 1, title: 'Hello world!', completed: false },
-    ],
-    todoValue: 'test title value'
+    todoList: [],
+    todoValue: ''
 }
 
 const counterSlice = createSlice({
@@ -24,7 +22,7 @@ const counterSlice = createSlice({
     reducers: {
         setTask(state, action: PayloadAction<string>) {
             state.todoList.push({
-                id: 1,
+                id: Date.now(),
                 title: action.payload,
                 completed: false
             });

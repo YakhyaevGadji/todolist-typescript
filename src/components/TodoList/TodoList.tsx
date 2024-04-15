@@ -1,6 +1,6 @@
 import React from "react";
-import { useAppSelector } from "../../../Hook";
 import TodoItem from "../TodoItem/TodoItem";
+import EmptyList from "../EmptyList";
 
 type TypeTodoList = {
     id: number,
@@ -9,17 +9,19 @@ type TypeTodoList = {
 };
 
 interface InterfaceTodList {
-    todoList: TypeTodoList[]
+    todoList: TypeTodoList[],
+    toggleTodoItem: (id: number) => void,
+    removeTodoItem: (id: number) => void
 };
 
-const TodoList: React.FC<InterfaceTodList> = ({todoList}) => {
-    console.log(todoList);
+const TodoList: React.FC<InterfaceTodList> = ({todoList, toggleTodoItem, removeTodoItem}) => {
     return (
         <div className="card mb-4">
             <ul id="tasksList" className="list-group list-group-flush">
+                {todoList.length <= 0 ? <EmptyList/> : false}
                 {todoList.map((todo) => {
                     return (
-                        <TodoItem key={todo.id} todoItem={todo}/>
+                        <TodoItem key={todo.id} todoItem={todo} toggleTodoItem={toggleTodoItem} removeTodoItem={removeTodoItem}/>
                     )
                 })}
             </ul>
